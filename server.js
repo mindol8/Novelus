@@ -22,8 +22,11 @@ app.use('/', router);
 app.use(function (req, res) {
     res.render('index.ejs');
 })
+http.createServer(app).listen(app.get('port'),  function () {
+    console.log("익스프레스로 웹 서버를 실행함 : " + app.get('port'));
+}) //express를 이용해 웹서버 만든다
 //ethereum
-web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));	
+web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));	
 
 var abi =[{"inputs":[],"name":"getdata","outputs":[{"internalType":"uint256","name":"a","type":"uint256"},{"internalType":"uint256","name":"t","type":"uint256"},
 {"internalType":"string","name":"n","type":"string"},{"internalType":"string","name":"o","type":"string"}],"stateMutability":"view","type":"function"},
@@ -33,6 +36,7 @@ var abi =[{"inputs":[],"name":"getdata","outputs":[{"internalType":"uint256","na
 {"inputs":[{"internalType":"uint256","name":"num","type":"uint256"}],"name":"setTotalAmount","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 
 function constructContract(sourceContract,res,account,amount,total_amount,name,novel){
+    
     var contract = sourceContract.new(amount,total_amount,name,novel,
         {
             from:account[0],
@@ -73,6 +77,3 @@ router.post('/funding',(req,res)=>{
     }
 })
 
-http.createServer(app).listen(app.get('port'),  function () {
-    console.log("익스프레스로 웹 서버를 실행함 : " + app.get('port'));
-}) //express를 이용해 웹서버 만든다
