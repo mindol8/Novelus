@@ -12,9 +12,11 @@
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+  <!--jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <!-- Custom styles for this template -->
   <link href="../stylesheet/index.css" rel="stylesheet">
+  
 
 </head>
 
@@ -71,18 +73,16 @@
 
       </div>
       <div class="col-md-7 mb-5">
-        <h2>작품 제목</h2>
+        <h2 id="novel">작품 제목</h2>
         <hr>
           <strong>엄청난 몰입감!</strong>
         <address>
           <p> 지금까지 이런 전개는 없었다 이것은 현실인가 소설인가 뭔 소린진 모르곘지만 대충 여기에 작품에 대한 간단한 설명을 넣습니다</p>
           <br>
-          <p><strong> 목표 후원액: 1,000,000원 </strong></p>
-        </address>
-        <form action="/funding" method="post">
-          <input type="number" name="amount"> 
-          <input type="submit" class="button btn btn-primary btn-lg" value="펀딩하기"></a>
-        </form>
+         <p> <strong> 목표 후원액:</strong> <strong  id="total_amount">1,000,000</strong><strong>원</strong></p> 
+        </address>        
+        <input type="number" name="amount" id="amount"> 
+        <input type="button" class="button btn btn-primary btn-lg" value="펀딩하기" id="btn-funding">
       </div>
     </div>
     <!-- /.row -->
@@ -94,7 +94,7 @@
           <img class="card-img-top" src="https://placehold.it/300x200" alt="">
           <div class="card-body">
             <h4 class="card-title">다른 작품 1</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
+            <p class="card-text"></p>
           </div>
           <div class="card-footer">
             <a href="#" class="btn btn-primary">Find Out More!</a>
@@ -106,7 +106,7 @@
           <img class="card-img-top" src="https://placehold.it/300x200" alt="">
           <div class="card-body">
             <h4 class="card-title">다른 작품 2</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
+            <p class="card-text"></p>
           </div>
           <div class="card-footer">
             <a href="#" class="btn btn-primary">Find Out More!</a>
@@ -118,7 +118,7 @@
           <img class="card-img-top" src="https://placehold.it/300x200" alt="">
           <div class="card-body">
             <h4 class="card-title">다른 작품 3</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+            <p class="card-text"></p>
           </div>
           <div class="card-footer">
             <a href="#" class="btn btn-primary">Find Out More!</a>
@@ -142,7 +142,24 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+  <script>
+    $(document).ready(() => {
+      $("#btn-funding").off('click').on('click',()=>{
+        $.ajax({
+          url:'/funding',
+          method:'post',
+          data:{amount:$("#amount").val(),novel:$('#novel').html(),total:$("#total_amount").html(),name:'user'},
+          success:(res)=>{
+            alert(res);
+          },
+          error:()=>{
+            alert('error');
+          }
+        })
+      })
+    })
+  </script>
 </body>
+
 
 </html>
